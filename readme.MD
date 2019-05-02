@@ -4,7 +4,7 @@ Dump the JSON DB into your local mongo using the command `mongoimport --db lab-r
 
 Run the project via `npm run dev`.
 
-The project will run on ### port 5000
+The project will run on `port 5000`
 
 ### Endpoints
 
