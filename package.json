@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "run mongoimport" : "mongoimport --db lab-react-ironbeers-backend --collection beers --jsonArray beers.json",
     "dev": "DEBUG=todolist-backend:* nodemon ./bin/www",
     "dev-windows": "nodemon ./bin/www"
   },
