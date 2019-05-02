@@ -1,6 +1,4 @@
-Install the project via `npm install`
-
-Dump the JSON DB into your local mongo using the command `mongoimport --db lab-react-ironbeers-backend --collection beers --jsonArray beers.json` You can find the beers.json in the project's root folder.
+Install the project via `npm install` and then `npm run mongoimport` in order to dump the JSON DB into your local mongo.
 
 Run the project via `npm run dev`.
 
