@@ -1,31 +1,60 @@
 const express = require('express');
 const router = express.Router();
-const Task = require("../models/Task")
+const Beer = require("../models/Beer")
 
-router.get('/tasks', (req, res, next) => {
-  Task
+const selectionObject = {
+  "_id": true,
+  "name": true,
+  "tagline": true,
+  "image_url": true,
+  "contributed_by": true
+}
+
+router.get('/all', (req, res, next) => {
+  Beer
     .find()
-    .select({
-      "__v": false,
-      "updatedAt": false
+    .select(selectionObject)
+    .then(allTheBeers => res.json(allTheBeers))
+});
+
+router.get('/single/:id', (req, res, next) => {
+  Beer
+    .findById(req.params.id)
+    .select(selectionObject)
+    .then(allTheBeers => res.json(allTheBeers))
+});
+
+router.get('/random', (req, res, next) => {
+  Beer
+    .find()
+    .select(selectionObject)
+    .then(allTheBeers => {
+      allTheBeers.sort((a, b) => (Math.random() > .5) ? -1 : 1)
+
+      res.json(allTheBeers[0])
     })
-    .then(allTheTasks => res.json(allTheTasks))
 });
 
+router.get('/search', (req, res, next) => {
+  var queryString = req.query.q
+  var beerRegexp = new RegExp(queryString, "g");
 
-router.post('/task', (req, res, next) => {
-  Task.create({
-    "taskStr": req.body.taskStr,
-    "done": false
-  }).then(() => {
-    Task
-      .find()
-      .select({
-        "__v": false,
-        "updatedAt": false
-      })
-      .then(allTheTasks => res.json(allTheTasks))
-  })
+  Beer
+    .find({ name: beerRegexp })
+    .select(selectionObject)
+    .then(allTheBeers => res.json(allTheBeers))
 });
+
+router.post('/new', (req, res, next) => {
+  Beer
+    .create({ name: req.body.name, tagline: req.body.tagline, image_url: req.body.image_url, contributed_by: req.body.contributed_by })
+    .then((newBeer) => {
+      Beer
+        .findById(newBeer._id)
+        .select(selectionObject)
+        .then(theNewBeer => res.json(theNewBeer))
+    })
+});
+
 
 module.exports = router;

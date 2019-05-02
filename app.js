@@ -14,7 +14,7 @@ const cors = require("cors")
 
 
 mongoose
-  .connect('mongodb://localhost/todolist-backend', {useNewUrlParser: true})
+  .connect('mongodb://localhost/lab-react-ironbeers-backend', {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
